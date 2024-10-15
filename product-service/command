@@ -1,0 +1,2 @@
+docker build -t product-service .
+docker run -p 5001:5001 product-service

@@ -1,20 +1,20 @@
-# Use the official Node.js image from Docker Hub
-FROM node:14
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
-# Create a directory for the app inside the container
-WORKDIR /usr/src/app
+# Set the working directory in the container
+WORKDIR /app
 
-# Copy the package.json and package-lock.json files to the container
-COPY package*.json ./
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-# Install the dependencies
-RUN npm install
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application code to the container
-COPY . .
+# Make port 5000 available to the world outside this container
+EXPOSE 5000
 
-# Expose the port the app runs on
-EXPOSE 3000
+# Define environment variable
+ENV NAME UserService
 
-# Command to start the app
-CMD ["node", "user-service.js"]
+# Run app.py when the container launches
+CMD ["python", "app.py"]
